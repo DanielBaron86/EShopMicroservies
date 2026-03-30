@@ -1,7 +1,19 @@
 ﻿services:
   catalog.api:
     image: catalog.api
+    ports:
+      - 5050:8081
     build:
       context: .
       dockerfile: src/Services/Catalog/Catalog.API/Dockerfile
-
+  
+  catalogdb:
+    image: postgres:18
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: catalogdb  
+    volumes:
+      - /home/daniel/devops/volumes/postgres:/var/lib/postgresql

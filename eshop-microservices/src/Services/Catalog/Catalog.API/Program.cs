@@ -1,4 +1,5 @@
 using Catalog.API.Products.CreateProduct;
+using JasperFx;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +11,8 @@ config.RegisterServicesFromAssemblies(typeof(Program).Assembly);
 });
 builder.Services.AddMarten(options =>
 {
-    options.Connection(builder.Configuration.GetConnectionString("Database")!);
+    var connectionString = builder.Configuration.GetConnectionString("Database");
+    options.Connection(connectionString);
 }).UseLightweightSessions();
 
 var app = builder.Build();
