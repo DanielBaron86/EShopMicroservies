@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\barond\\repos\\eshop-microservices\\eshop-microservices\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{645C9435-E7AE-4377-BC30-9EC21C87BFF7}|src\\Services\\Catalog\\Catalog.API\\Catalog.API.csproj|c:\\users\\barond\\repos\\eshop-microservices\\eshop-microservices\\src\\services\\catalog\\catalog.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{645C9435-E7AE-4377-BC30-9EC21C87BFF7}|src\\Services\\Catalog\\Catalog.API\\Catalog.API.csproj|solutionrelative:src\\services\\catalog\\catalog.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\barond\\repos\\eshop-microservices\\eshop-microservices\\src\\Services\\Catalog\\Catalog.API\\Program.cs",
+              "RelativeDocumentMoniker": "src\\Services\\Catalog\\Catalog.API\\Program.cs",
+              "ToolTip": "C:\\Users\\barond\\repos\\eshop-microservices\\eshop-microservices\\src\\Services\\Catalog\\Catalog.API\\Program.cs",
+              "RelativeToolTip": "src\\Services\\Catalog\\Catalog.API\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-30T08:22:07.989Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
