@@ -1,6 +1,9 @@
 ﻿services:
   catalog.api:
+    container_name: catalog.api
     image: catalog.api
+    networks:
+      - eshop
     ports:
       - 5050:8081
     build:
@@ -9,6 +12,9 @@
   
   catalogdb:
     image: postgres:18
+    container_name: postgres
+    networks:
+      - eshop
     ports:
       - 5432:5432
     environment:
@@ -16,4 +22,11 @@
       POSTGRES_USER: postgres
       POSTGRES_DB: catalogdb  
     volumes:
-      - /home/daniel/devops/volumes/postgres:/var/lib/postgresql
+      - postgres:/var/lib/postgresql
+networks:
+  eshop:
+    #external: true
+    driver: bridge
+volumes:
+  postgres:
+    external: true      
