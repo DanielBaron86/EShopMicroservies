@@ -11,9 +11,9 @@ public class GetProductEndpoint : ICarterModule
             var response = result.Adapt<GetProductResponse>();
             return Results.Ok(response);
         })
-         .WithName("GetProduct")
+        .WithName("GetProduct")
         .Produces<GetProductsResults>(StatusCodes.Status201Created)
         .WithSummary("Get Product")
-        .WithDescription("Get Product");;
+        .WithDescription("Get Product");
     }
 }
