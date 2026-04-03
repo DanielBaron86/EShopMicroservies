@@ -14,6 +14,6 @@ public class GetProductByIdEndpoint : ICarterModule
         .WithName("GetProductById")
         .Produces<GetProductbyIdResponse>(StatusCodes.Status201Created)
         .WithSummary("Get Product By Id")
-        .WithDescription("Get Product By Id");    ;
+        .WithDescription("Get Product By Id");
     }
 }
