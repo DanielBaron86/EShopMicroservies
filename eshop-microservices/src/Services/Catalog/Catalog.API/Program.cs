@@ -3,12 +3,13 @@ using BuildingBlocks.Behaviours;
 var builder = WebApplication.CreateBuilder(args);
 //Add services to the container
 
+var assemblies = typeof(Program).Assembly;
 builder.Services.AddCarter(new DependencyContextAssemblyCatalog(
-    new[] { typeof(Program).Assembly }
+    new[] { assemblies }
 ));
 builder.Services.AddMediatR(config =>
 {
-config.RegisterServicesFromAssemblies(typeof(Program).Assembly);
+config.RegisterServicesFromAssemblies(assemblies);
 config.AddOpenBehavior(typeof(ValidationBehaviour<,>));
 });
 builder.Services.AddMarten(options =>
@@ -16,7 +17,7 @@ builder.Services.AddMarten(options =>
     var connectionString = builder.Configuration.GetConnectionString("Database");
     options.Connection(connectionString);
 }).UseLightweightSessions();
-builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
+builder.Services.AddValidatorsFromAssembly(assemblies);
 var app = builder.Build();
 
 //Configure the HTTP Request pipeline
