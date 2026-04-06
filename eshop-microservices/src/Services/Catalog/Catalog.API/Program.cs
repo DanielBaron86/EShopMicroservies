@@ -1,5 +1,6 @@
 using System.Text.Json;
 using BuildingBlocks.Behaviours;
+using BuildingBlocks.Exceptions.Handler;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,32 +22,13 @@ builder.Services.AddMarten(options =>
     options.Connection(connectionString);
 }).UseLightweightSessions();
 builder.Services.AddValidatorsFromAssembly(assemblies);
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 var app = builder.Build();
 
 //Configure the HTTP Request pipeline
 app.MapCarter();
-app.UseExceptionHandler(exceptionHandlerApp =>
+app.UseExceptionHandler(appError =>
 {
-    exceptionHandlerApp.Run(async context =>
-    {
-        var exception = context.Features.Get<IExceptionHandlerFeature>()?.Error;
-        if (exception == null)
-        {
-            return;
-        }
 
-        var problemDetails = new ProblemDetails
-        {
-            Title = exception.Message,
-            Status = StatusCodes.Status500InternalServerError,
-            Detail = exception.StackTrace,
-        };
-        var jsonResponse = JsonSerializer.Serialize(problemDetails);
-        var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
-        logger.LogError("Logging exception or errors "+exception, exception.Message);
-        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-        context.Response.ContentType = "application/problem+json";
-        await context.Response.WriteAsync(jsonResponse);
-    });
 });
 app.Run();
