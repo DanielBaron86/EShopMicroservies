@@ -1,9 +1,3 @@
-using System.Text.Json;
-using BuildingBlocks.Behaviours;
-using BuildingBlocks.Exceptions.Handler;
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-
 var builder = WebApplication.CreateBuilder(args);
 //Add services to the container
 
@@ -22,6 +16,10 @@ builder.Services.AddMarten(options =>
     var connectionString = builder.Configuration.GetConnectionString("Database");
     options.Connection(connectionString);
 }).UseLightweightSessions();
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.InitializeMartenWith<CatalogInitialData>();
+}
 builder.Services.AddValidatorsFromAssembly(assemblies);
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 var app = builder.Build();
