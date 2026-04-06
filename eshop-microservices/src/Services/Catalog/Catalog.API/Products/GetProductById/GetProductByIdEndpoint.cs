@@ -7,9 +7,9 @@ public class GetProductByIdEndpoint : ICarterModule
     {
         app.MapGet("/products/{id}", async (Guid id, ISender sender) =>
         {
-           var result = await sender.Send(new GetProductByIdQuery(id));
-           var response = result.Adapt<GetProductbyIdResponse>();
-           return Results.Ok(response);
+            var result = await sender.Send(new GetProductByIdQuery(id));
+            var response = result.Adapt<GetProductbyIdResponse>();
+            return Results.Ok(response);
         })
         .WithName("GetProductById")
         .Produces<GetProductbyIdResponse>(StatusCodes.Status201Created)

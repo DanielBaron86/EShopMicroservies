@@ -14,6 +14,6 @@ public class DeleteProductEndpoint : ICarterModule
         .WithName("DeleteProduct")
         .Produces<DeleteProductResponse>(StatusCodes.Status200OK)
         .WithSummary("Delete Product")
-        .WithDescription("Delete a product");    
+        .WithDescription("Delete a product");
     }
 }
