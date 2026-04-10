@@ -1,15 +1,4 @@
 ﻿services:
-  catalog.api:
-    container_name: catalog.api
-    image: catalog.api
-    networks:
-      - eshop
-    ports:
-      - 5050:8081
-    build:
-      context: .
-      dockerfile: src/Services/Catalog/Catalog.API/Dockerfile
-  
   catalogdb:
     image: postgres:18
     container_name: postgres
@@ -20,13 +9,43 @@
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
-      POSTGRES_DB: catalogdb  
+      POSTGRES_DB: catalogdb
     volumes:
       - postgres:/var/lib/postgresql
+  
+  catalog.api:
+    container_name: catalog.api
+    depends_on:
+      - catalogdb
+    image: catalog.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ConnectionStrings__Database=Server=192.168.1.101;Port=5432;Database=catalogdb;User Id=postgres;Password=postgres;Include Error Detail=true
+    networks:
+      - eshop
+    ports:
+      - 6000:8080
+    build:
+      context: .
+      dockerfile: src/Services/Catalog/Catalog.API/Dockerfile
+  
+  basket.api:
+    image: basket.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+    ports:
+      - 6001:8080 
+    networks:
+      - eshop
+    build:
+      context: .
+      dockerfile: src/Services/Basket/Basket.API/Dockerfile    
 networks:
   eshop:
     #external: true
     driver: bridge
 volumes:
   postgres:
-    external: true      
+    external: true
