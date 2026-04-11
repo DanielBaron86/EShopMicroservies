@@ -1,7 +1,7 @@
 ﻿services:
   catalogdb:
     image: postgres:18
-    container_name: postgres
+    container_name: catalogdb
     networks:
       - eshop
     ports:
@@ -9,9 +9,22 @@
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
-      POSTGRES_DB: catalogdb
+      POSTGRES_DB: CatalogDb
     volumes:
-      - postgres:/var/lib/postgresql
+      - catalogdb:/var/lib/postgresql
+  basketdb:
+    image: postgres:18
+    container_name: basketdb
+    networks:
+      - eshop
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: BasketDb
+    volumes:
+      - basketdb:/var/lib/postgresql 
   
   catalog.api:
     container_name: catalog.api
@@ -21,7 +34,7 @@
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
-      - ConnectionStrings__Database=Server=192.168.1.101;Port=5432;Database=catalogdb;User Id=postgres;Password=postgres;Include Error Detail=true
+      - ConnectionStrings__Database=Server=192.168.1.101;Port=5432;Database=CatalogDb;User Id=postgres;Password=postgres;Include Error Detail=true
     networks:
       - eshop
     ports:
@@ -32,6 +45,9 @@
   
   basket.api:
     image: basket.api
+    container_name: basket.api
+    depends_on:
+      - basketdb
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
@@ -47,5 +63,7 @@ networks:
     #external: true
     driver: bridge
 volumes:
-  postgres:
+  catalogdb:
     external: true
+  basketdb:
+    external: true  
