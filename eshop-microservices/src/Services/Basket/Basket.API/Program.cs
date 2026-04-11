@@ -10,6 +10,15 @@ builder.Services.AddMediatR(config =>
     config.AddOpenBehavior(typeof(ValidationBehaviour<,>));
     config.AddOpenBehavior(typeof(LoggingBehaviour<,>));
 });
+builder.Services.AddMarten(options =>
+{
+    var connectionString = builder.Configuration.GetConnectionString("Database");
+    options.Connection(connectionString);
+}).UseLightweightSessions();
+/*if (builder.Environment.IsDevelopment())
+{
+    builder.Services.InitializeMartenWith<CatalogInitialData>();
+}*/
 builder.Services.AddValidatorsFromAssembly(assemblies);
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 builder.Services.AddHealthChecks();
