@@ -6,3 +6,5 @@ global using FluentValidation;
 global using Mapster;
 global using BuildingBlocks.Behaviours;
 global using BuildingBlocks.Exceptions.Handler;
+global using HealthChecks.UI.Client;
+global using Microsoft.AspNetCore.Diagnostics.HealthChecks;

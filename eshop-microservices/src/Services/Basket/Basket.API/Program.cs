@@ -12,11 +12,19 @@ builder.Services.AddMediatR(config =>
 });
 builder.Services.AddValidatorsFromAssembly(assemblies);
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
-builder.Services.AddHealthChecks().AddNpgSql(builder.Configuration.GetConnectionString("Database"));
+builder.Services.AddHealthChecks();
 var app = builder.Build();
 
 //Configure the HTTP Request pipeline
 app.MapCarter();
-app.MapGet("/", () => "Hello World!");
+app.UseExceptionHandler(appError =>
+{
 
+});
+app.UseHealthChecks("/health",
+    new HealthCheckOptions
+    {
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    }
+);
 app.Run();
