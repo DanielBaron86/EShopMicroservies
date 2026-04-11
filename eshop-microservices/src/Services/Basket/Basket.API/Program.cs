@@ -4,7 +4,15 @@ var assemblies = typeof(Program).Assembly;
 builder.Services.AddCarter(new DependencyContextAssemblyCatalog(
     new[] { assemblies }
 ));
-
+builder.Services.AddMediatR(config =>
+{
+    config.RegisterServicesFromAssemblies(assemblies);
+    config.AddOpenBehavior(typeof(ValidationBehaviour<,>));
+    config.AddOpenBehavior(typeof(LoggingBehaviour<,>));
+});
+builder.Services.AddValidatorsFromAssembly(assemblies);
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+builder.Services.AddHealthChecks().AddNpgSql(builder.Configuration.GetConnectionString("Database"));
 var app = builder.Build();
 
 //Configure the HTTP Request pipeline
