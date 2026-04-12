@@ -7,9 +7,9 @@ public class DeleteBasketEndpoints :ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapDelete("/basket/{userName}", async (ISender sender, string userName) =>
+        app.MapDelete("/basket/{UserName}", async (ISender sender, string UserName) =>
             {
-                var result = sender.Send(new DeleteBasketCommand(userName));
+                var result = await sender.Send(new DeleteBasketCommand(UserName));
                 var response = result.Adapt<DeletebasketResponse>();
                 return Results.Ok(response);
             })

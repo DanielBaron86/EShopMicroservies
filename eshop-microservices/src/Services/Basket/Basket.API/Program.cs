@@ -16,13 +16,10 @@ builder.Services.AddMarten(options =>
     options.Connection(connectionString);
     options.Schema.For<ShoppingCart>().Identity( x => x.UserName);
 }).UseLightweightSessions();
-/*if (builder.Environment.IsDevelopment())
-{
-    builder.Services.InitializeMartenWith<CatalogInitialData>();
-}*/
 builder.Services.AddValidatorsFromAssembly(assemblies);
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
-builder.Services.AddHealthChecks();
+builder.Services.AddHealthChecks().AddNpgSql(builder.Configuration.GetConnectionString("Database"));
+builder.Services.AddScoped<IBasketRepository,BasketRepository>();
 var app = builder.Build();
 
 //Configure the HTTP Request pipeline
