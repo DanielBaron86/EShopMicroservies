@@ -17,12 +17,13 @@ builder.Services.AddMarten(options =>
     options.Schema.For<ShoppingCart>().Identity( x => x.UserName);
 }).UseLightweightSessions();
 builder.Services.AddValidatorsFromAssembly(assemblies);
-builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 builder.Services.AddHealthChecks().AddNpgSql(builder.Configuration.GetConnectionString("Database"));
 builder.Services.AddScoped<IBasketRepository,BasketRepository>();
-var app = builder.Build();
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
 
 //Configure the HTTP Request pipeline
+var app = builder.Build();
 app.MapCarter();
 app.UseExceptionHandler(appError =>
 {
