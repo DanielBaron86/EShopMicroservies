@@ -65,6 +65,7 @@
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ConnectionStrings__Database=Server=192.168.1.101;Port=5433;Database=BasketDb;User Id=postgres;Password=postgres;Include Error Detail=true 
+      - ConnectionStrings__Redis=192.168.1.101:6379
     ports:
       - 6001:8080 
     networks:
