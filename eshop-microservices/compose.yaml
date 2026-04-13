@@ -72,7 +72,12 @@
       - eshop
     build:
       context: .
-      dockerfile: src/Services/Basket/Basket.API/Dockerfile    
+      dockerfile: src/Services/Basket/Basket.API/Dockerfile
+  discount.grpc:
+    image: discount.grpc
+    build:
+      context: .
+      dockerfile: src/Services/Discount/Discount.Grpc/Dockerfile    
 networks:
   eshop:
     #external: true
@@ -83,4 +88,5 @@ volumes:
   basketdb:
     external: true  
   redis:
-    external: true  
+    external: true
+
