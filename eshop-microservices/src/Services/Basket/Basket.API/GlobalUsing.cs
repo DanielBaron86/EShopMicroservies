@@ -12,3 +12,4 @@ global using Marten;
 global using BuildingBlocks.Exceptions;
 global using Basket.API.Exceptions;
 global using Basket.API.Data;
+global using Microsoft.Extensions.Caching.Distributed;

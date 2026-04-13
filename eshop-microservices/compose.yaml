@@ -1,6 +1,7 @@
 ﻿services:
   catalogdb:
     image: postgres:18
+    restart: unless-stopped
     container_name: catalogdb
     networks:
       - eshop
@@ -14,6 +15,7 @@
       - catalogdb:/var/lib/postgresql
   basketdb:
     image: postgres:18
+    restart: unless-stopped
     container_name: basketdb
     networks:
       - eshop
@@ -25,7 +27,18 @@
       POSTGRES_DB: BasketDb
     volumes:
       - basketdb:/var/lib/postgresql 
-  
+  redis:
+    image: redis:latest
+    restart: unless-stopped
+    container_name: redis
+    networks:
+      - eshop
+    ports:
+      - 6379:6379
+    volumes:
+      - redis:/data
+      #environment:
+      #- REDIS_ARGS=--requirepass your_password_here --appendonly yes
   catalog.api:
     container_name: catalog.api
     depends_on:
@@ -67,4 +80,6 @@ volumes:
   catalogdb:
     external: true
   basketdb:
+    external: true  
+  redis:
     external: true  
