@@ -36,6 +36,18 @@ public class CustomExceptionHandler(ILogger<IExceptionHandler> logger): IExcepti
                 exception.GetType().Name,
                 httpContext.Response.StatusCode = StatusCodes.Status404NotFound
             ),
+            UnauthorizedRequestException =>
+            (
+                exception.Message,
+                exception.GetType().Name,
+                StatusCodes.Status401Unauthorized
+            ),
+            ForbiddenRequestException =>
+            (
+                exception.Message,
+                exception.GetType().Name,
+                StatusCodes.Status403Forbidden
+            ),
             _ =>
             (
                 exception.Message,

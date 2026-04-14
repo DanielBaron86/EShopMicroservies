@@ -90,3 +90,9 @@ volumes:
   redis:
     external: true
 
+  auth0:
+    image: auth0
+    build:
+      context: .
+      dockerfile: src/Auth0/Auth0/Dockerfile
+
