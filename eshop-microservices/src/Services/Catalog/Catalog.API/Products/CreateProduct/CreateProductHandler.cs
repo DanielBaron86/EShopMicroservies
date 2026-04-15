@@ -2,14 +2,20 @@ using BuildingBlocks.AuthRequests;
 
 namespace Catalog.API.Products.CreateProduct;
 
-public record CreateProductCommand(string Name, List<string> Category, string Description, string ImageFile, decimal Price) 
-    : ICommand<CreateProductResult>, IAuthorizedRequest
+public record CreateProductCommand(
+    string Name,
+    List<string> Category,
+    string Description,
+    string ImageFile,
+    decimal Price)
+    : ICommand<CreateProductResult>
+/*, IAuthorizedRequest
 {
     public string[] RequiredRoles => ["admin"];
     public string[] RequiredPermissions => ["create:products"];
     public bool RequireAllRoles => false;
     public bool RequireAllPermissions => false;
-}
+}*/;
 
 public record CreateProductResult(Guid Id);
 public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
