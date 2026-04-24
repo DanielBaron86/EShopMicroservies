@@ -19,9 +19,15 @@ public class DiscountServices(DiscountContext dbContext, ILogger<DiscountService
         return coupon.Adapt<CouponModel>();
     }
 
-    public override Task<CouponModel> CreateDiscount(CreateDiscountRequest request, ServerCallContext context)
+    public override async Task<CouponModel> CreateDiscount(CreateDiscountRequest request, ServerCallContext context)
     {
-        return base.CreateDiscount(request, context);
+        var coupon = request.Coupon.Adapt<Coupon>();
+        if (coupon is null) throw new RpcException(new Status(StatusCode.InvalidArgument,"Invalid Coupon Model"));
+        dbContext.Add(coupon);
+        await dbContext.SaveChangesAsync();
+        logger.LogInformation("Creating coupon with model {coupon}",coupon);
+        return coupon.Adapt<CouponModel>();
+
     }
 
     public override Task<CouponModel> UpdateDiscount(UpdateDiscountRequest request, ServerCallContext context)
