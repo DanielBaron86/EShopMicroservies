@@ -8,6 +8,7 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["src/Auth0/Auth0/Auth0.csproj", "src/Auth0/Auth0/"]
+COPY ["src/BuildingBlocks/BuildingBlocks/BuildingBlocks.csproj", "src/BuildingBlocks/BuildingBlocks/"]
 RUN dotnet restore "src/Auth0/Auth0/Auth0.csproj"
 COPY . .
 WORKDIR "/src/src/Auth0/Auth0"
