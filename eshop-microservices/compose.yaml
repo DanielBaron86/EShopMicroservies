@@ -75,9 +75,30 @@
       dockerfile: src/Services/Basket/Basket.API/Dockerfile
   discount.grpc:
     image: discount.grpc
+    container_name: discount.grpc
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ConnectionStrings__Database=Data Source=/app/data/discount.db
+    volumes:
+      - discount-sqlite:/app/data 
+    ports:
+      - 6002:8080
+    networks:
+      - eshop
     build:
       context: .
-      dockerfile: src/Services/Discount/Discount.Grpc/Dockerfile    
+      dockerfile: src/Services/Discount/Discount.Grpc/Dockerfile
+  auth0:
+    image: auth0
+    container_name: auth0
+    ports:
+      - 6010:8080
+    networks:
+      - eshop
+    build:
+      context: .
+      dockerfile: src/Auth0/Auth0/Dockerfile    
 networks:
   eshop:
     #external: true
@@ -89,10 +110,4 @@ volumes:
     external: true  
   redis:
     external: true
-
-  auth0:
-    image: auth0
-    build:
-      context: .
-      dockerfile: src/Auth0/Auth0/Dockerfile
-
+  discount-sqlite:  

@@ -1,5 +1,24 @@
 # This is a generated file. Not intended for manual editing.
 services:
+  auth0:
+    build:
+      context: "/home/daniel/Projects/EShopMicroservies/eshop-microservices"
+      dockerfile: "src/Auth0/Auth0/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net9.0/Auth0.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "auth0:dev"
+    ports: []
+    volumes:
+    - "/home/daniel/Projects/EShopMicroservies/eshop-microservices/src/Auth0/Auth0:/app:rw"
+    - "/home/daniel/Projects/EShopMicroservies/eshop-microservices:/src:rw"
+    - "/home/daniel/.nuget/packages:/home/app/.nuget/packages"
+    working_dir: "/app"
   basket.api:
     build:
       context: "/home/daniel/Projects/EShopMicroservies/eshop-microservices"
@@ -33,6 +52,24 @@ services:
     ports: []
     volumes:
     - "/home/daniel/Projects/EShopMicroservies/eshop-microservices/src/Services/Catalog/Catalog.API:/app:rw"
+    - "/home/daniel/Projects/EShopMicroservies/eshop-microservices:/src:rw"
+    - "/home/daniel/.nuget/packages:/home/app/.nuget/packages"
+    working_dir: "/app"
+  discount.grpc:
+    build:
+      context: "/home/daniel/Projects/EShopMicroservies/eshop-microservices"
+      dockerfile: "src/Services/Discount/Discount.Grpc/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net9.0/Discount.Grpc.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "discount.grpc:dev"
+    ports: []
+    volumes:
+    - "/home/daniel/Projects/EShopMicroservies/eshop-microservices/src/Services/Discount/Discount.Grpc:/app:rw"
     - "/home/daniel/Projects/EShopMicroservies/eshop-microservices:/src:rw"
     - "/home/daniel/.nuget/packages:/home/app/.nuget/packages"
     working_dir: "/app"
