@@ -30,9 +30,14 @@ public class DiscountServices(DiscountContext dbContext, ILogger<DiscountService
 
     }
 
-    public override Task<CouponModel> UpdateDiscount(UpdateDiscountRequest request, ServerCallContext context)
+    public override async Task<CouponModel> UpdateDiscount(UpdateDiscountRequest request, ServerCallContext context)
     {
-        return base.UpdateDiscount(request, context);
+        var coupon = request.Coupon.Adapt<Coupon>();
+        if (coupon is null) throw new RpcException(new Status(StatusCode.InvalidArgument,"Invalid Coupon Model"));
+        dbContext.Update(coupon);
+        await dbContext.SaveChangesAsync();
+        logger.LogInformation("Updating coupon with model {coupon}",coupon);
+        return coupon.Adapt<CouponModel>();
     }
 
     public override Task<DeleteDiscountResponse> DeleteDiscount(DeleteDiscountRequest request, ServerCallContext context)
