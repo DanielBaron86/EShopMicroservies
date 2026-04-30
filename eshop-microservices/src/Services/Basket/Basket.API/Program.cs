@@ -1,3 +1,5 @@
+using Discount.Grpc;
+
 var builder = WebApplication.CreateBuilder(args);
 //ADD Services to container
 var assemblies = typeof(Program).Assembly;
@@ -25,7 +27,19 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
 });
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
+{
+    options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
+}).ConfigurePrimaryHttpMessageHandler(() =>
+{
+    var handler = new HttpClientHandler
+    {
+        ServerCertificateCustomValidationCallback =
+            HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+    };
 
+    return handler;
+});
 
 //Configure the HTTP Request pipeline
 var app = builder.Build();
