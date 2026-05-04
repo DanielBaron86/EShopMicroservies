@@ -99,7 +99,12 @@
       - eshop
     build:
       context: .
-      dockerfile: src/Auth0/Auth0/Dockerfile    
+      dockerfile: src/Auth0/Auth0/Dockerfile
+  ordering.api:
+    image: ordering.api
+    build:
+      context: .
+      dockerfile: src/Services/Ordering/Ordering.API/Dockerfile    
 networks:
   eshop:
     #external: true
@@ -111,4 +116,5 @@ volumes:
     external: true  
   redis:
     external: true
-  discount-sqlite:  
+  discount-sqlite:    
+
