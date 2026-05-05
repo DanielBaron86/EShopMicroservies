@@ -13,3 +13,4 @@ global using Marten.Pagination;
 global using HealthChecks.UI.Client;
 global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+global using BuildingBlocks.Extensions;

@@ -2,6 +2,7 @@ var builder = WebApplication.CreateBuilder(args);
 //Add services to the container
 
 var assemblies = typeof(Program).Assembly;
+builder.Services.AddOpenApiServices(builder.Configuration);
 builder.Services.AddCarter(new DependencyContextAssemblyCatalog(
     new[] { assemblies }
 ));
@@ -37,6 +38,7 @@ builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 
 //Configure the HTTP Request pipeline
+app.UseOpenApiDocs();
 app.MapCarter();
 app.UseExceptionHandler(appError =>
 {
