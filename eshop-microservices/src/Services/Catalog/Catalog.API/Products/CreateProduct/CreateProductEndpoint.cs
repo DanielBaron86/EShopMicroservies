@@ -18,10 +18,12 @@ public class CreateProductEndpoint : ICarterModule
                 var result = await sender.Send(command);
                 var response = result.Adapt<CreateProductResponse>();
                 return Results.Created($"/products/{response.Id}", response);
-            })
+             })
             .WithName("CreateProduct")
             .Produces<CreateProductResponse>(StatusCodes.Status201Created)
             .WithSummary("Create Product")
-            .WithDescription("Create a product");
+            .WithDescription("Create a product")
+            .RequireJwtAuthorization();
+            ;
     }
 }

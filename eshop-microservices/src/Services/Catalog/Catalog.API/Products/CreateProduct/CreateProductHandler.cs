@@ -9,13 +9,13 @@ public record CreateProductCommand(
     string ImageFile,
     decimal Price)
     : ICommand<CreateProductResult>
-/*, IAuthorizedRequest
+, IAuthorizedRequest
 {
     public string[] RequiredRoles => ["admin"];
     public string[] RequiredPermissions => ["create:products"];
     public bool RequireAllRoles => false;
     public bool RequireAllPermissions => false;
-}*/;
+};
 
 public record CreateProductResult(Guid Id);
 public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
