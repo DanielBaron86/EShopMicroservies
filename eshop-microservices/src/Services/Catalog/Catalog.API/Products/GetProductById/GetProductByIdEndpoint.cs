@@ -1,4 +1,4 @@
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 namespace Catalog.API.Products.GetProductById;
 public record GetProductbyIdResponse(Product Product);
@@ -17,14 +17,7 @@ public class GetProductByIdEndpoint : ICarterModule
         .Produces<GetProductbyIdResponse>(StatusCodes.Status201Created)
         .WithSummary("Get Product By Id")
         .WithDescription("Get Product By Id")
-        .RequireAuthorization()
-        .WithOpenApi(op => {
-            op.Security = new List<OpenApiSecurityRequirement>
-            {
-                new() { [new OpenApiSecurityScheme { Reference = new() { Id = "Bearer", Type = ReferenceType.SecurityScheme } }] = Array.Empty<string>() }
-            };
-            return op;
-        })
-        ;
+        .RequireJwtAuthorization();
+         ;
     }
 }

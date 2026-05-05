@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Scalar.AspNetCore;
 
 namespace BuildingBlocks.Extensions;
@@ -20,7 +20,7 @@ public static class OpenApiExtensions
                 document.Info = new() { Title = "API", Version = "v1" };
                 
                 document.Components ??= new();
-                document.Components.SecuritySchemes = new Dictionary<string, OpenApiSecurityScheme>
+                document.Components.SecuritySchemes = new Dictionary<string, IOpenApiSecurityScheme>
                 {
                     ["Bearer"] = new OpenApiSecurityScheme
                     {
@@ -48,5 +48,19 @@ public static class OpenApiExtensions
         }
 
         return app;
+    }
+    
+    public static RouteHandlerBuilder RequireJwtAuthorization(this RouteHandlerBuilder builder)
+    {
+        return builder
+            .RequireAuthorization()
+            .WithOpenApi(op =>
+            {
+                op.Security = new List<OpenApiSecurityRequirement>
+                {
+                    new() { [new OpenApiSecuritySchemeReference("Bearer")] = new List<string>() }
+                };
+                return op;
+            });
     }
 }
