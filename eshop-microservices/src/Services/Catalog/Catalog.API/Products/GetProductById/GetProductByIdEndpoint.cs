@@ -17,7 +17,6 @@ public class GetProductByIdEndpoint : ICarterModule
         .Produces<GetProductbyIdResponse>(StatusCodes.Status201Created)
         .WithSummary("Get Product By Id")
         .WithDescription("Get Product By Id")
-        .RequireJwtAuthorization();
          ;
     }
 }

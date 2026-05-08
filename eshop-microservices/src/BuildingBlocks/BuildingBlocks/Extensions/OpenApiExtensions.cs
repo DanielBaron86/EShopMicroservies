@@ -49,18 +49,4 @@ public static class OpenApiExtensions
 
         return app;
     }
-    
-    public static RouteHandlerBuilder RequireJwtAuthorization(this RouteHandlerBuilder builder)
-    {
-        return builder
-            .RequireAuthorization()
-            .WithOpenApi(op =>
-            {
-                op.Security = new List<OpenApiSecurityRequirement>
-                {
-                    new() { [new OpenApiSecuritySchemeReference("Bearer")] = new List<string>() }
-                };
-                return op;
-            });
-    }
 }

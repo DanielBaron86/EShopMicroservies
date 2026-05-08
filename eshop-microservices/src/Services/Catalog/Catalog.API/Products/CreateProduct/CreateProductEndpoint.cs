@@ -23,7 +23,6 @@ public class CreateProductEndpoint : ICarterModule
             .Produces<CreateProductResponse>(StatusCodes.Status201Created)
             .WithSummary("Create Product")
             .WithDescription("Create a product")
-            .RequireJwtAuthorization();
             ;
     }
 }
