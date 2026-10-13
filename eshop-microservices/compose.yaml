@@ -47,7 +47,7 @@
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
-      - ConnectionStrings__Database=Server=192.168.1.101;Port=5432;Database=CatalogDb;User Id=postgres;Password=postgres;Include Error Detail=true
+      - ConnectionStrings__Database=Server=catalogdb;Port=5432;Database=CatalogDb;User Id=postgres;Password=postgres;Include Error Detail=true
     networks:
       - eshop
     ports:
@@ -64,8 +64,8 @@
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
-      - ConnectionStrings__Database=Server=192.168.1.101;Port=5433;Database=BasketDb;User Id=postgres;Password=postgres;Include Error Detail=true 
-      - ConnectionStrings__Redis=192.168.1.101:6379
+      - ConnectionStrings__Database=Server=basketdb;Port=5432;Database=BasketDb;User Id=postgres;Password=postgres;Include Error Detail=true 
+      - ConnectionStrings__Redis=redis:6379
       - GrpcSettings__DiscountUrl=http://discount.grpc:8080
     ports:
       - 6001:8080 
@@ -102,6 +102,8 @@
       dockerfile: src/Auth0/Auth0/Dockerfile
   ordering.api:
     image: ordering.api
+    networks:
+      - eshop
     build:
       context: .
       dockerfile: src/Services/Ordering/Ordering.API/Dockerfile    

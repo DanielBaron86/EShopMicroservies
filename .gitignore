@@ -52,3 +52,7 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+#InteliJ
+/.idea
+.idea
+eshop-microservices/.idea
