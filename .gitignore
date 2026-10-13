@@ -56,3 +56,5 @@ nunit-*.xml
 /.idea
 .idea
 eshop-microservices/.idea
+#VS
+.vs
